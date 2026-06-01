@@ -1,0 +1,56 @@
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { CartProvider } from "@/hooks/useCart";
+
+import ScrollToTop from "@/components/ScrollToTop";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import ShoppingCart from "@/components/ShoppingCart";
+
+import HomePage from "@/pages/HomePage";
+import ShopPage from "@/pages/ShopPage";
+import ProductDetailPage from "@/pages/ProductDetailPage";
+import AboutPage from "@/pages/AboutPage";
+import CheckoutPage from "@/pages/CheckoutPage";
+import SuccessPage from "@/pages/SuccessPage";
+
+function App() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  return (
+    <BrowserRouter>
+      <CartProvider>
+
+        <ScrollToTop />
+
+        <div className="flex flex-col min-h-screen">
+
+          <Header setIsCartOpen={setIsCartOpen} />
+
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/shop" element={<ShopPage />} />
+              <Route path="/product/:id" element={<ProductDetailPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/success" element={<SuccessPage />} />
+            </Routes>
+          </main>
+
+          <Footer />
+
+          <ShoppingCart
+            isCartOpen={isCartOpen}
+            setIsCartOpen={setIsCartOpen}
+          />
+
+        </div>
+
+      </CartProvider>
+    </BrowserRouter>
+  );
+}
+
+export default App;
